@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/33202703/README.md)
 API_php – Music API
 
 API REST en PHP construite avec le micro-framework Slim 4, basée sur le squelette officiel Slim Skeleton. Le projet sert à exposer des données musicales via des routes JSON.
