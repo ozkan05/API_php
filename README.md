@@ -1,42 +1,126 @@
-# Slim Framework 4 Skeleton Application
+API_php – Music API
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+API REST en PHP construite avec le micro-framework Slim 4, basée sur le squelette officiel Slim Skeleton. Le projet sert à exposer des données musicales via des routes JSON.
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
+Sommaire
+Technologies
+Prérequis
+Installation
+Configuration
+Lancer le projet
+Routes de l'API
+Structure du projet
+Tests et qualité du code
+Auteur
+Technologies
+PHP 7.4 ou supérieur (testé en 7.4, 8.0 et 8.1)
+Slim Framework 4
+PHP-DI (injection de dépendances)
+Composer (gestion des dépendances)
+PHPUnit (tests), PHP_CodeSniffer et PHPStan (qualité du code)
+Prérequis
+PHP et Composer installés
+Un serveur local de type WAMP, XAMPP ou le serveur intégré de PHP
+Git
+Installation
+Cloner le dépôt :
+bash
+git clone https://github.com/ozkan05/API_php.git
+cd API_php
+Installer les dépendances :
+bash
+composer install
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+Si Composer n'est pas installé globalement, tu peux utiliser le fichier composer.phar :
 
-## Install the Application
+bash
+php composer.phar install
+Configuration
 
-Run this command from the directory in which you want to install your new Slim Framework application. You will require PHP 7.4 or newer.
+Les paramètres de l'application se trouvent dans app/settings.php (mode debug, dossier de logs, etc.).
 
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
-```
+Si tu utilises un fichier .env pour des informations sensibles (identifiants de base de données, clés), ne le versionne jamais : il est déjà ignoré par .gitignore.
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+Le dossier logs/ doit être accessible en écriture par le serveur.
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
+Lancer le projet
+Avec WAMP / Apache
 
-To run the application in development, you can run these commands 
+Place le projet dans C:\wamp64\www\ puis ouvre :
 
-```bash
-cd [my-app-name]
+http://localhost/NOM_DU_DOSSIER/public/
+
+Le fichier .htaccess du dossier public/ gère la réécriture d'URL (le module mod_rewrite doit être activé).
+
+Avec le serveur intégré de PHP
+bash
 composer start
-```
 
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
+ou
+
+bash
+php -S localhost:8080 -t public
+
+L'API est alors disponible sur http://localhost:8080.
+
+Avec Docker
+bash
 docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
+Routes de l'API
 
-Run this command in the application directory to run the test suite
+Les routes sont déclarées dans app/routes.php.
 
-```bash
+Méthode	Route	Description
+GET	/	Route de test (Hello world)
+GET	/users	Liste des utilisateurs
+GET	/users/{id}	Détail d'un utilisateur
+
+Ces routes proviennent du squelette Slim. Ajoute ici les routes propres à ton projet (artistes, albums, titres, etc.) au fur et à mesure.
+
+Exemple de réponse :
+
+json
+{
+  "statusCode": 200,
+  "data": [
+    { "id": 1, "username": "bill.gates", "firstName": "Bill", "lastName": "Gates" }
+  ]
+}
+Structure du projet
+.
+├── app/                  # Configuration : routes, dépendances, middlewares, settings
+├── logs/                 # Fichiers de logs
+├── public/               # Point d'entrée (index.php) et .htaccess
+├── src/
+│   ├── Application/      # Actions (contrôleurs), handlers, middlewares
+│   ├── Domain/           # Entités et interfaces de repository
+│   ├── Infrastructure/   # Implémentations (persistance des données)
+│   └── Repository/       # Repositories de l'application
+├── tests/                # Tests PHPUnit
+├── var/cache/            # Cache
+├── composer.json
+├── phpunit.xml
+├── phpcs.xml
+└── phpstan.neon.dist
+Tests et qualité du code
+
+Lancer les tests :
+
+bash
 composer test
-```
 
-That's it! Now go build something cool.
+Vérifier le style du code :
+
+bash
+composer phpcs
+
+Analyse statique :
+
+bash
+composer phpstan
+
+Les tests sont aussi exécutés automatiquement par GitHub Actions à chaque push (.github/workflows/tests.yml).
+
+Auteur
+
+Projet réalisé par ozkan.
