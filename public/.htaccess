@@ -1,0 +1,24 @@
+Options All -Indexes
+
+<Files .htaccess>
+    Require all denied
+</Files>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  # Redirect to HTTPS
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+  RewriteRule ^(.*) - [E=BASE:%1]
+
+  # If the above doesn't work, set RewriteBase manually to the
+  # absolute path of the directory that contains this .htaccess
+  # RewriteBase /
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^ index.php [QSA,L]
+</IfModule>
