@@ -1,93 +1,120 @@
-[README.md](https://github.com/user-attachments/files/33202703/README.md)
-API_php – Music API
+# API_php – Music API
 
-API REST en PHP construite avec le micro-framework Slim 4, basée sur le squelette officiel Slim Skeleton. Le projet sert à exposer des données musicales via des routes JSON.
+API REST en PHP construite avec le micro-framework [Slim 4](https://www.slimframework.com/), basée sur le squelette officiel Slim Skeleton. Le projet sert à exposer des données musicales via des routes JSON.
 
-Sommaire
-Technologies
-Prérequis
-Installation
-Configuration
-Lancer le projet
-Routes de l'API
-Structure du projet
-Tests et qualité du code
-Auteur
-Technologies
-PHP 7.4 ou supérieur (testé en 7.4, 8.0 et 8.1)
-Slim Framework 4
-PHP-DI (injection de dépendances)
-Composer (gestion des dépendances)
-PHPUnit (tests), PHP_CodeSniffer et PHPStan (qualité du code)
-Prérequis
-PHP et Composer installés
-Un serveur local de type WAMP, XAMPP ou le serveur intégré de PHP
-Git
-Installation
-Cloner le dépôt :
-bash
+## Sommaire
+
+- [Technologies](#technologies)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Lancer le projet](#lancer-le-projet)
+- [Routes de l'API](#routes-de-lapi)
+- [Structure du projet](#structure-du-projet)
+- [Tests et qualité du code](#tests-et-qualité-du-code)
+- [Auteur](#auteur)
+
+## Technologies
+
+- PHP 7.4 ou supérieur (testé en 7.4, 8.0 et 8.1)
+- [Slim Framework 4](https://www.slimframework.com/)
+- [PHP-DI](https://php-di.org/) (injection de dépendances)
+- [Composer](https://getcomposer.org/) (gestion des dépendances)
+- PHPUnit (tests), PHP_CodeSniffer et PHPStan (qualité du code)
+
+## Prérequis
+
+- PHP et Composer installés
+- Un serveur local de type WAMP, XAMPP ou le serveur intégré de PHP
+- Git
+
+## Installation
+
+1. Cloner le dépôt :
+
+```bash
 git clone https://github.com/ozkan05/API_php.git
 cd API_php
-Installer les dépendances :
-bash
+```
+
+2. Installer les dépendances :
+
+```bash
 composer install
+```
 
-Si Composer n'est pas installé globalement, tu peux utiliser le fichier composer.phar :
+Si Composer n'est pas installé globalement, tu peux utiliser le fichier `composer.phar` :
 
-bash
+```bash
 php composer.phar install
-Configuration
+```
 
-Les paramètres de l'application se trouvent dans app/settings.php (mode debug, dossier de logs, etc.).
+## Configuration
 
-Si tu utilises un fichier .env pour des informations sensibles (identifiants de base de données, clés), ne le versionne jamais : il est déjà ignoré par .gitignore.
+Les paramètres de l'application se trouvent dans `app/settings.php` (mode debug, dossier de logs, etc.).
 
-Le dossier logs/ doit être accessible en écriture par le serveur.
+Si tu utilises un fichier `.env` pour des informations sensibles (identifiants de base de données, clés), ne le versionne jamais : il est déjà ignoré par `.gitignore`.
 
-Lancer le projet
-Avec WAMP / Apache
+Le dossier `logs/` doit être accessible en écriture par le serveur.
 
-Place le projet dans C:\wamp64\www\ puis ouvre :
+## Lancer le projet
 
+### Avec WAMP / Apache
+
+Place le projet dans `C:\wamp64\www\` puis ouvre :
+
+```
 http://localhost/NOM_DU_DOSSIER/public/
+```
 
-Le fichier .htaccess du dossier public/ gère la réécriture d'URL (le module mod_rewrite doit être activé).
+Le fichier `.htaccess` du dossier `public/` gère la réécriture d'URL (le module `mod_rewrite` doit être activé).
 
-Avec le serveur intégré de PHP
-bash
+### Avec le serveur intégré de PHP
+
+```bash
 composer start
+```
 
 ou
 
-bash
+```bash
 php -S localhost:8080 -t public
+```
 
-L'API est alors disponible sur http://localhost:8080.
+L'API est alors disponible sur `http://localhost:8080`.
 
-Avec Docker
-bash
+### Avec Docker
+
+```bash
 docker-compose up -d
-Routes de l'API
+```
 
-Les routes sont déclarées dans app/routes.php.
+## Routes de l'API
 
-Méthode	Route	Description
-GET	/	Route de test (Hello world)
-GET	/users	Liste des utilisateurs
-GET	/users/{id}	Détail d'un utilisateur
+Les routes sont déclarées dans `app/routes.php`.
 
-Ces routes proviennent du squelette Slim. Ajoute ici les routes propres à ton projet (artistes, albums, titres, etc.) au fur et à mesure.
+| Méthode | Route         | Description                         |
+|---------|---------------|-------------------------------------|
+| GET     | `/`           | Route de test (Hello world)         |
+| GET     | `/users`      | Liste des utilisateurs              |
+| GET     | `/users/{id}` | Détail d'un utilisateur             |
+
+> Ces routes proviennent du squelette Slim. Ajoute ici les routes propres à ton projet (artistes, albums, titres, etc.) au fur et à mesure.
 
 Exemple de réponse :
 
-json
+```json
 {
   "statusCode": 200,
   "data": [
     { "id": 1, "username": "bill.gates", "firstName": "Bill", "lastName": "Gates" }
   ]
 }
-Structure du projet
+```
+
+## Structure du projet
+
+```
 .
 ├── app/                  # Configuration : routes, dépendances, middlewares, settings
 ├── logs/                 # Fichiers de logs
@@ -103,25 +130,30 @@ Structure du projet
 ├── phpunit.xml
 ├── phpcs.xml
 └── phpstan.neon.dist
-Tests et qualité du code
+```
+
+## Tests et qualité du code
 
 Lancer les tests :
 
-bash
+```bash
 composer test
+```
 
 Vérifier le style du code :
 
-bash
+```bash
 composer phpcs
+```
 
 Analyse statique :
 
-bash
+```bash
 composer phpstan
+```
 
-Les tests sont aussi exécutés automatiquement par GitHub Actions à chaque push (.github/workflows/tests.yml).
+Les tests sont aussi exécutés automatiquement par GitHub Actions à chaque push (`.github/workflows/tests.yml`).
 
-Auteur
+## Auteur
 
-Projet réalisé par ozkan.
+Projet réalisé par [ozkan05](https://github.com/ozkan05).
